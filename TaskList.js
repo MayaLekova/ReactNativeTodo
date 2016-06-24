@@ -45,9 +45,18 @@ class TaskList extends React.Component {
 		};
 	}
 
+	componentWillReceiveProps(nextProps) {
+	    const dataSource = this.state.dataSource.cloneWithRows(nextProps.todos);
+
+	    this.setState({ dataSource });
+	}
+
 	renderRow(todo) {
 		return (
-			<TaskRow todo={todo} />
+			<TaskRow 
+				onDone={this.props.onDone}
+				todo={todo}
+			/>
 		);
 	}
 
@@ -74,6 +83,7 @@ class TaskList extends React.Component {
 }
 
 TaskList.propTypes = {
+	onDone: React.PropTypes.func.isRequired,
 	onAddStarted: React.PropTypes.func.isRequired,
 	todos: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
 };
